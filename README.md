@@ -2,8 +2,11 @@
 # Sistema de Gestión Académica – Proyecto Final de Base de Datos
 
 **Autores:** Jairo Rincón - Camilo Cuvides
+
 **Institución:** Fundación de Estudios Superiores Comfanorte (FESC)  
+
 **Programa:** Ingeniería de Software  
+
 **Año:** 2025  
 
 ---
@@ -103,7 +106,7 @@ El sistema incluye varios **triggers** que garantizan la consistencia de los dat
 
 ---
 
-## 📫 Autores
+## Autores
 
 **Andrés Rincón**  
 Estudiante de Ingeniería de Sistemas – FESC  
