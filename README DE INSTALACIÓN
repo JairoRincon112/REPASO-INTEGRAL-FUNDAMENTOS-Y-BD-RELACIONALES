@@ -1,0 +1,158 @@
+# Sistema de Gestión Académica  
+**Autores:** Jairo Rincón - Camilo Cuvides
+**Base de Datos:** MySQL Workbench 8.0+  
+
+---
+
+## 🧩 Descripción General
+
+Este proyecto corresponde a la implementación completa de un **Sistema de Gestión Académica**, desarrollado en **MySQL Workbench**, con el objetivo de modelar, optimizar y mantener la información académica de una institución universitaria.  
+
+El sistema permite gestionar **departamentos, profesores, estudiantes, asignaturas, cursos, inscripciones y calificaciones**, incorporando **triggers, vistas, consultas avanzadas, control de concurrencia y mantenimiento automático de promedios**.
+
+Fue diseñado siguiendo buenas prácticas de diseño relacional, control de integridad referencial y automatización de procesos mediante triggers y vistas materializadas.
+
+---
+
+## Requisitos Previos
+
+Antes de ejecutar el script, asegúrate de contar con los siguientes componentes instalados:
+
+- **MySQL Server 8.0 o superior**
+- **MySQL Workbench 8.0 o superior**
+- Permisos de administrador para crear y eliminar bases de datos
+- Configuración del juego de caracteres `utf8mb4` (recomendado para acentos y caracteres especiales)
+
+---
+
+## Instrucciones de Instalación
+
+1. **Abrir MySQL Workbench**  
+   Inicia el entorno de MySQL Workbench y conéctate a tu servidor local o remoto.
+
+2. **Crear una nueva sesión SQL**  
+   Crea una pestaña nueva de consulta (File → New Query Tab).
+
+3. **Copiar y pegar el script completo**  
+   Copia todo el contenido del archivo:  
+
+y pégalo en la pestaña de consulta.
+
+4. **Ejecutar el script completo**  
+Presiona **Ctrl + Shift + Enter** (o el botón del rayo) para ejecutar **todo el script**.  
+El script creará automáticamente:
+- La base de datos `gestion_academica`
+- Todas las tablas, índices y claves foráneas
+- Los triggers de validación y mantenimiento
+- Las vistas de reportes
+- Los datos de prueba iniciales
+- Consultas avanzadas y ejemplos de control de concurrencia
+
+5. **Verificar la creación**  
+En el panel izquierdo (Schemas), actualiza la lista de bases de datos (`Refresh`) y selecciona `gestion_academica`.  
+Deberías ver todas las tablas creadas con sus relaciones correctamente enlazadas.
+
+---
+
+## Estructura de la Base de Datos
+
+El sistema contiene las siguientes entidades principales:
+
+- **departamentos**
+- **profesores**
+- **estudiantes**
+- **asignaturas**
+- **cursos**
+- **inscripciones**
+- **calificaciones**
+- **promedios_curso** *(tabla auxiliar materializada)*
+
+También incluye:
+
+- **Triggers:** para validaciones, mantenimiento de promedios y control de integridad.  
+- **Vistas:** para reportes de cursos, estudiantes y promedios.  
+- **Consultas complejas:** con CTEs, funciones de ventana y álgebra relacional.
+
+---
+
+## Generación del Diagrama ER
+
+Si deseas visualizar el **diagrama entidad–relación**, puedes copiar este código Mermaid en Draw.io o en un editor compatible:
+
+erDiagram
+    DEPARTAMENTOS {
+        int id_departamento PK
+        varchar nombre
+        varchar ubicacion
+        decimal presupuesto
+    }
+
+    PROFESORES {
+        int id_profesor PK
+        varchar nombre
+        varchar correo
+        date fecha_contratacion
+        decimal salario
+        int id_departamento FK
+    }
+
+    ESTUDIANTES {
+        int id_estudiante PK
+        varchar nombre
+        varchar correo
+        date fecha_nacimiento
+        int semestre
+    }
+
+    ASIGNATURAS {
+        int id_asignatura PK
+        varchar nombre
+        int creditos
+        int id_departamento FK
+    }
+
+    CURSOS {
+        int id_curso PK
+        int id_asignatura FK
+        int id_profesor FK
+        varchar semestre
+        year anio
+        int capacidad
+    }
+
+    INSCRIPCIONES {
+        int id_inscripcion PK
+        int id_estudiante FK
+        int id_curso FK
+        date fecha_inscripcion
+        enum estado
+    }
+
+    CALIFICACIONES {
+        int id_calificacion PK
+        int id_inscripcion FK
+        decimal nota
+        date fecha_registro
+    }
+
+    PROMEDIOS_CURSO {
+        int id_curso PK, FK
+        decimal promedio
+        timestamp ultima_actualizacion
+    }
+
+    %% ================================
+    %% RELACIONES
+    %% ================================
+    DEPARTAMENTOS ||--o{ PROFESORES : "tiene"
+    DEPARTAMENTOS ||--o{ ASIGNATURAS : "ofrece"
+
+    PROFESORES ||--o{ CURSOS : "dicta"
+    ASIGNATURAS ||--o{ CURSOS : "se imparten en"
+
+    ESTUDIANTES ||--o{ INSCRIPCIONES : "realiza"
+    CURSOS ||--o{ INSCRIPCIONES : "pertenece"
+
+    INSCRIPCIONES ||--o{ CALIFICACIONES : "genera"
+
+    CURSOS ||--o| PROMEDIOS_CURSO : "mantiene promedio"
