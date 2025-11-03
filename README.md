@@ -109,7 +109,7 @@ El sistema incluye varios **triggers** que garantizan la consistencia de los dat
 ## Autores
 
 **Andrés Rincón**  
-Estudiante de Ingeniería de Sistemas – FESC  
+Estudiante de Ingeniería de Software – FESC  
 
 **Camilo Cuvides**  
-Estudiante de Ingeniería de Sistemas – FESC  
+Estudiante de Ingeniería de Software – FESC  
