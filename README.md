@@ -1,5 +1,5 @@
 # REPASO-INTEGRAL-FUNDAMENTOS-Y-BD-RELACIONALES
-# 🎓 Sistema de Gestión Académica – Proyecto Final de Base de Datos
+# Sistema de Gestión Académica – Proyecto Final de Base de Datos
 
 **Autores:** Jairo Rincón - Camilo Cuvides
 **Institución:** Fundación de Estudios Superiores Comfanorte (FESC)  
